@@ -1,58 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faCartShopping, faCreditCard, faRocket } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     // The main navigation bar with a black blurred background and bottom border
     // To make the entire page black, you would typically add `bg-black` to a parent div
     // or the <body> tag in your main application's CSS or structure.
-    <nav className="bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg text-white p-4 border-b border-gray-700 border-solid">
-      {/* Container for content, centered and with space between items */}
-      <div className="container mx-auto flex justify-between items-center">
-        {/* "Virtualschool" title on the left */}
-        <a href="#" className="text-xl font-bold font-inter">Virtualschool</a>
-
-        {/* Right-side container for buttons */}
-        <div className="flex space-x-4"> {/* Added space-x-4 for spacing between buttons */}
-          {/* Sign In Button */}
-          <a
-            href="#"
-            className="px-4 py-2 rounded-md transition-all duration-300 relative overflow-hidden group
-                       border border-white text-white bg-black font-inter"
-          >
-            {/*
-              Pseudo-element for the white slash effect on hover.
-              - absolute inset-0: Positions the span to cover the entire button area.
-              - transform -translate-y-full: Initially moves the slash completely above the button.
-              - scale-0: Makes the slash initially invisible.
-              - rotate-45: Creates the diagonal angle.
-              - transition-all duration-300: Smooth transition for all transformations.
-              - origin-bottom-left: Ensures the diagonal rotation and scaling originate from the bottom-left.
-              - z-0: Places the slash behind the text content.
-
-              On hover:
-              - group-hover:scale-[2]: Scales up the slash to cover the button diagonally.
-              - group-hover:translate-y-0: Slides the slash down into its visible position.
-              - group-hover:bg-white: Sets the background color of the slash to white.
-            */}
-            <span className="absolute inset-0 bg-white transform -translate-y-full scale-0 rotate-45 transition-all duration-300 origin-bottom-left group-hover:scale-[2] group-hover:translate-y-0 z-0"></span>
-            {/* Text content of the button, placed above the slash effect */}
-            <span className="relative z-10">Sign In</span>
-          </a>
-
-          {/* Sign Up Button */}
-          <a
-            href="#"
-            className="px-4 py-2 rounded-md transition-all duration-300 relative overflow-hidden group
-                       border border-violet-500 text-white bg-black font-inter"
-          >
-            {/*
-              Pseudo-element for the violet slash effect on hover.
-              - Similar logic to the Sign In button, but with a violet background for the slash.
-            */}
-            <span className="absolute inset-0 bg-violet-500 transform -translate-y-full scale-0 rotate-45 transition-all duration-300 origin-bottom-left group-hover:scale-[2] group-hover:translate-y-0 z-0"></span>
-            {/* Text content of the button, placed above the slash effect */}
-            <span className="relative z-10">Sign Up</span>
-          </a>
+    <nav className="fixed w-full bg-transparent backdrop-blur-md z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-x-8">
+            {/* Synthra logo with gradient text */}
+            <a className="font-semibold text-xl text-primary hover:scale-105 transition duration-300 text-transparent bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text" href="/">Synthra</a>
+            {/* Desktop navigation links */}
+            <div className="hidden md:flex space-x-8 pl-8">
+              <a href="/" className="text-white hover:text-purple-400 transition-colors hover:scale-105 transition duration-300 flex items-center">
+                <FontAwesomeIcon icon={faHouse} className="mr-2" />
+                Home
+              </a>
+              <a href="/categories" className="text-white hover:text-purple-400 transition-colors hover:scale-105 transition duration-300 flex items-center">
+                <FontAwesomeIcon icon={faCartShopping} className="mr-2" />
+                Products
+              </a>
+              <a href="/topup" className="text-white hover:text-purple-400 transition-colors hover:scale-105 transition duration-300 flex items-center">
+                <FontAwesomeIcon icon={faCreditCard} className="mr-2" />
+                Topup
+              </a>
+              <a href="/status" className="text-white hover:text-purple-400 transition-colors hover:scale-105 transition duration-300 flex items-center">
+                <FontAwesomeIcon icon={faRocket} className="mr-2" />
+                Status
+              </a>
+            </div>
+          </div>
+          {/* Desktop Sign In/Sign Up buttons */}
+          <div className="hidden md:flex space-x-4 relative">
+            <a href="/login" className="px-4 py-2 text-white hover:text-purple-400 transition-colors">Sign In</a>
+            <a href="/register" className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">Sign Up</a>
+          </div>
+          {/* Mobile menu button (hamburger icon) */}
+          <div className="md:hidden relative">
+            <button className="text-white focus:outline-none" onClick={toggleMobileMenu}>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+            {/* Mobile menu dropdown */}
+            <div className={`absolute right-0 mt-4 w-56 rounded-xl border text-card-foreground shadow border-white/[0.04] bg-black/80 backdrop-blur-md transition-all duration-300 ease-out transform ${isMobileMenuOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'}`}>
+              <div className="py-2 px-1">
+                <a href="/" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors flex items-center">
+                  <FontAwesomeIcon icon={faHouse} className="mr-2" />
+                  Home
+                </a>
+                <a href="/categories" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors flex items-center">
+                  <FontAwesomeIcon icon={faCartShopping} className="mr-2" />
+                  Products
+                </a>
+                <a href="/topup" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors flex items-center">
+                  <FontAwesomeIcon icon={faCreditCard} className="mr-2" />
+                  Topup
+                </a>
+                <a href="/status" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors flex items-center">
+                  <FontAwesomeIcon icon={faRocket} className="mr-2" />
+                  Status
+                </a>
+                <div aria-orientation="horizontal" role="none" className="shrink-0 bg-white/10 h-[1px] w-full my-2"></div>
+                <a href="/login" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors">Sign In</a>
+                <a href="/register" className="block px-4 py-3 text-white hover:text-purple-400 hover:bg-transparent/20 rounded-lg transition-colors">Sign Up</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
