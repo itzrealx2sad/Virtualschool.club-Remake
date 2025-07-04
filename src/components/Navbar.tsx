@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-x-8">
             {/* Synthra logo with gradient text */}
-            <a className="font-semibold text-xl text-primary hover:scale-105 transition duration-300 text-transparent bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text" href="/">Synthra</a>
+            <a className="font-semibold text-xl text-primary hover:scale-105 transition duration-300 text-transparent bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text" href="/">Virtual School</a>
             {/* Desktop navigation links */}
             <div className="hidden md:flex space-x-8 pl-8">
               <a href="/" className="text-white hover:text-purple-400 transition-colors hover:scale-105 transition duration-300 flex items-center">
